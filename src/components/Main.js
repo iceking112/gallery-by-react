@@ -15,8 +15,16 @@ imageDatas=(function getImageURL(imageDatasArr){
     return imageDatasArr;
 })(imageDatas);
 
+function getRangeRandom(low,high){
+  return Math.ceil(Math.random()*(high-low)+low);
+}
 class ImgFigure extends React.Component {
   render() {
+    var styleObj={};
+
+    if(this.props.arrange.pos){
+      styleObj=this.props.arrange.pos;
+    }
     return (
       <figure className="img-figure">
           <img src={this.props.data.imageURL} alt={this.props.title}/>
@@ -49,7 +57,60 @@ class AppComponent extends React.Component {
    * 重新布局图片，传入居中的index
    */
   rearrange: function(centerIndex){
+    var imgsArrangeArr=this.stage.imgsArrangeArr,
+        Constant=this.Constant,
+        centerPos=Constant.centerPos,
+        hPosRange=Constant.hPosRange,
+        vPosRange=Constant.vPosRange,
+        hPosRangeLeftSecX=hPosRange.leftSecxm,
+        hPosRangeRightSecx=hPosRange.rightSecx,
+        hPosRangeY=hPosRange.y,
+        vPosRangeTopY=vPosRange.topY，
+        vPosRangex=vPosRange.x,
 
+        imgsArrangeTopArr=[],
+        //取一个或者不取
+        topImgNum=Math.ceil(Math.random()*2),
+        topImgSpliceIndex=0,
+
+        imgsArrangeCenterArr=imgsArrangeArr.splice(certerIndex,1);
+        //首先居中 centerIndex的图片
+        imgsArrangeCenterArr[0].pos=centerPos;
+        //取出要布局上侧的图片的状态信息
+        topImgSpliceIndex=Math.ceil(Math.random()i*(mgsArrangeArr.length-topImgNum));
+        imgsArrangeTopArr=imgsArrangeArr.splice(topImgSpliceIndex,topImgNum);
+        //布局位于上侧的图片
+        imgsArrangeTopArr.forEach(function(value,index){
+          imgsArrangeTopArr[index].pos={
+            top:getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
+            left:getRangeRandom(vPosRangex[0],vPosRangex[1])
+          }
+        });
+
+        for (var i = 0,j=imgsArrangeArr.length,k=j/2; i < j; i++) {
+          var hPosRangeLORX=null;
+          //前半部分布局左边，有半部分布局右边
+          if(i<k){
+            hPosRangeLORX=hPosRangeLeftSecX;
+          }else {
+            hPosRangeLORX=hPosRangeRightSecx;
+          }
+
+          imgsArrangeArr[i].pos={
+            top:getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
+            left:getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
+          }
+        }
+
+        if (imgsArrangeArr && imgsArrangeTopArr[0]) {
+          imgsArrangeArr.splice(topImgSpliceIndex,0,imgsArrangeTopArr[0]);
+        }
+
+        imgsArrangeArr.splice(centerIndex,0,imgsArrangeCenterArr[0]);
+
+        this.setState({
+          imgsArrangeArr:imgsArrangeArr
+        });
   },
 
   getInitialStage: function(){
@@ -111,7 +172,8 @@ class AppComponent extends React.Component {
           }
         }
       }
-      imgFigures.push(<ImgFigure data={imageDatas[i]} ref={'imgFigure'+i}/>);
+      imgFigures.push(<ImgFigure data={imageDatas[i]} ref={'imgFigure'+i}
+                       arrange={this.state.imgsArrangeArr[i]}/>);
     }
 
     return (
