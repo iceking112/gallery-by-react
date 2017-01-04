@@ -169,12 +169,12 @@ class AppComponent extends React.Component {
     this.Constant.vPosRange.x[1] = halfStageW;
     this.rearrange(0);
   }
-  render() {
+  render() { 
     var controllerUnits=[],imgFigures=[];
     imageDatas.forEach(function (value,index){
       if(!this.state.imgsArrangeArr[index]){
         this.state.imgsArrangeArr[index]={
-          pos:{ 
+          pos:{
             left:'0',
             top:'0'
           }
