@@ -174,7 +174,7 @@ class AppComponent extends React.Component {
     imageDatas.forEach(function (value,index){
       if(!this.state.imgsArrangeArr[index]){
         this.state.imgsArrangeArr[index]={
-          pos:{
+          pos:{ 
             left:'0',
             top:'0'
           }
