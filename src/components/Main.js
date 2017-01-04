@@ -76,7 +76,7 @@ class AppComponent extends React.Component {
    * 重新布局图片，传入居中的index
      指定居中排布哪个照片
    */
-  rearrange(centerIndex){
+  rearrange (centerIndex){
     var imgsArrangeArr=this.state.imgsArrangeArr,
         Constant=this.Constant,
         centerPos=Constant.centerPos,
@@ -169,7 +169,8 @@ class AppComponent extends React.Component {
     this.Constant.vPosRange.x[1] = halfStageW;
     this.rearrange(0);
   }
-  render() { 
+
+  render() {
     var controllerUnits=[],imgFigures=[];
     imageDatas.forEach(function (value,index){
       if(!this.state.imgsArrangeArr[index]){
