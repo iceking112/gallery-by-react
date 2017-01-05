@@ -62,7 +62,7 @@ class ImgFigure extends React.Component {
         imgFigureClassName+=this.props.arrange.isInverse ? ' is-inverse':'';
     return (
       <figure className={imgFigureClassName} style={styleObj} ref="figure" onClick={this.handleClick.bind(this)}>
-          <img className='img-' src={this.props.data.imageURL} alt={this.props.data.title}/>
+          <img src={this.props.data.imageURL} alt={this.props.data.title}/>
           <figcaption>
             <h2 className="img-title">{this.props.data.title}</h2>
             <div className="img-back" onClick={this.handleClick.bind(this)}>
