@@ -33,10 +33,8 @@ class ImgFigure extends React.Component {
    */
    handleClick(e){
     if(this.props.arrange.isCenter){
-      console.log(this.props);
       this.props.inverse();
     }else {
-      console.log(this.props);
       this.props.center();
     }
      e.stopPropagation();
@@ -74,6 +72,36 @@ class ImgFigure extends React.Component {
             </div>
           </figcaption>
       </figure>
+    )
+  }
+}
+
+//控制组件
+class ControllerUnit extends React.Component{
+  handleClick (e){
+    //如果点击的是当前正在选中态的按钮，则翻转图片，否则将对应的图片居中
+    console.log(this);
+    if(this.props.arrange.isCenter){
+      this.props.inverse();
+    }else {
+      this.props.center();
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  render (){
+    var controllerUnitClassName="controller-unit";
+
+    //如果对应的是居中的图片，显示控制按钮的居中态
+    if (this.props.arrange.isCenter) {
+      controllerUnitClassName+=" is-center";
+      //如果同时对应的是翻转图片，显示控制按钮的翻转态
+      if (this.props.arrange.isInverse) {
+        controllerUnitClassName+=" is-inverse";
+      }
+    }
+    return (
+      <span className={controllerUnitClassName} onClick={this.handleClick.bind(this)}></span>
     )
   }
 }
@@ -136,7 +164,6 @@ class AppComponent extends React.Component {
     *  @return {Function}这是一个闭包函数，其内return一个真正待被执行的函数
     */
     center(index){
-      console.log('进入center函数');
       return function(){
         this.rearrange(index);
       }.bind(this);
@@ -159,7 +186,7 @@ class AppComponent extends React.Component {
 
         imgsArrangeTopArr=[],
         //取一个或者不取
-        topImgNum=Math.ceil(Math.random()*2),
+        topImgNum=Math.floor(Math.random()*2),
         topImgSpliceIndex=0,
 
         imgsArrangeCenterArr=imgsArrangeArr.splice(centerIndex,1);
@@ -268,6 +295,11 @@ class AppComponent extends React.Component {
                         arrange={this.state.imgsArrangeArr[index]}
                         inverse={this.inverse(index).bind(this)}
                         center={this.center(index).bind(this)}/>);
+
+       controllerUnits.push(<ControllerUnit key={index}
+                             arrange={this.state.imgsArrangeArr[index]}
+                             inverse={this.inverse(index).bind(this)}
+                             center={this.center(index).bind(this)}/>);
     }.bind(this));
 
     return (
@@ -276,6 +308,7 @@ class AppComponent extends React.Component {
             {imgFigures}
           </section>
           <nav className="controller-nav">
+            {controllerUnits}
           </nav>
       </section>
     );
