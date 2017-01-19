@@ -34,7 +34,7 @@ function getDefaultModules() {
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!autoprefixer-loader?{browsers:["last 5 version"]}'//!sass-loader?outputStyle=expanded
+        loader: 'style-loader!css-loader!autoprefixer-loader'//!sass-loader?outputStyle=expanded
       },
       {
         test: /\.less/,

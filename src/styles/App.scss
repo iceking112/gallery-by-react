@@ -5,6 +5,13 @@
        url("../fonts/icons/turn-arrow.ttf") format("truetype"),
        url("../fonts/icons/turn-arrow.svg") format("svg");
 }
+
+@for $i from 1 through 10 {
+　　　　.border-#{$i} {
+　　　　　　border: $i px solid blue;
+　　　　}
+　　}
+
 /* Base Application Styles */
 html,body {
   width: 100%;
